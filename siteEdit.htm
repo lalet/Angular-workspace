@@ -13,9 +13,10 @@
 <body>
 	<div class="container-fluid" ng-controller = "siteEditCtrl">
 		<h1> Dives Sites Maintenance</h1>
+        <div ng-show="view=='list">
 			<div class = "row">
 				<div class="col-sm-12">
-					<button class="btn btn-primary btn-lg">
+					<button class="btn btn-primary btn-lg" ng-click = "startAdd()"s>
 						Add new dive
 					</button>
 				</div>
@@ -37,8 +38,29 @@
 	          		</button>
 	        	</div>
 	      	</div>
-
 		</div>
+       </div>
+       <!-- Add view -->
+       <div ng-show="view=='add'">
+       		<h3> Specify the name of the dive site:</h3>
+            <div class="row">
+            	<div class="col-sm-6">
+                	<input class="form-control input-lg" type ="text" placeholder="site name" ng-model="siteBox"/>
+                </div>
+                 <!-- next section -->
+            </div class = "row" style="margin-top: 12 px;">
+           		<div class="col-sm-6">
+                	<button class="btn btn-success btn" ng-disabled = "siteBox==''" ng-click="add()">
+                    Add
+                    </button>
+                    <button class="btn btn-warning btn"  ng-click="cancel()">
+                    Cancel
+                    </button>
+                </div>
+            <div>
+            	
+            </div>
+       </div>
 	</div>
 	<script src="angular.min.js"></script>
   	<script src="sites.js"></script>
@@ -48,7 +70,28 @@
 
    	 function SiteEditCtrl($scope) {
       	$scope.sites = sites;
+		$scope.startAdd = startAdd;
+		$scope.cancel = cancel;
+		$scope.add = add;
+		
+		setView('list');
+		
+		function setView(view){
+			$scope.view = view;
    		 }
+		 
+		 function startAdd(){
+		 	$scope.siteBox = '';
+			setView('add');
+		 }
+		 function cancel(){
+		 	setView('list');
+		 }
+		 function add(){
+		 	$scope.sites.push($scope.siteBox);
+			setView('list');
+		 }
+	 }
     </script>
 </body>
 </html>
